@@ -4,7 +4,7 @@ CFlAGS = -Wall -Wextra -Werror
 AR = ar rcs
 RM = rm -f
 
-SRC = ft_itoa.c ft_strdup.c ft_strlen.c hex.c ft_printf.c usd.c
+SRC = ft_strlen.c hex.c ft_printf.c usd.c ft_putnbr.c
 
 OBJ = $(SRC:.c=.o)
 	

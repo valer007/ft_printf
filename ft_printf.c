@@ -6,7 +6,7 @@
 /*   By: vmakarya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 22:29:21 by vmakarya          #+#    #+#             */
-/*   Updated: 2025/02/03 23:42:12 by vmakarya         ###   ########.fr       */
+/*   Updated: 2025/02/04 01:02:04 by vmakarya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,26 +22,13 @@ int	ft_print_string(char *str)
 	return (count);
 }
 
-int	ft_print_number(int num)
-{
-	char	*ch;
-	int		count;
-
-	ch = ft_itoa(num);
-	if (!ch)
-		return (0);
-	count = write(1, ch, ft_strlen(ch));
-	free(ch);
-	return (count);
-}
-
 int	ft_handle_specifier(char spec, va_list args, int count, char c)
 {
 	count = 0;
 	if (spec == 's')
 		count = ft_print_string(va_arg(args, char *));
 	else if (spec == 'd' || spec == 'i')
-		count = ft_print_number(va_arg(args, int));
+		count = ft_putnbr(va_arg(args, int));
 	else if (spec == 'c')
 	{
 		c = (char)va_arg(args, int);

@@ -1,55 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_putnbr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vmakarya <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/03 23:29:14 by vmakarya          #+#    #+#             */
-/*   Updated: 2025/02/03 23:29:15 by vmakarya         ###   ########.fr       */
+/*   Created: 2025/01/25 00:24:34 by vmakarya          #+#    #+#             */
+/*   Updated: 2025/02/04 01:05:16 by vmakarya         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	check_sign(int n)
+int	ft_putnbr(int n)
 {
-	int	len;
+	char	ch;
+	int		count;
 
-	len = 0;
-	if (n <= 0)
-		len = 1;
-	while (n != 0)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa(int n)
-{
-	char	*ch;
-	int		len;
-
+	count = 0;
 	if (n == -2147483648)
-		return (ft_strdup("-2147483648"));
-	len = check_sign(n);
-	ch = malloc((len + 1) * sizeof(char));
-	if (!ch)
-		return (NULL);
-	ch[len] = '\0';
+	{
+		count += write(1, "-2147483648", 11);
+		return (count);
+	}
 	if (n < 0)
 	{
-		ch[0] = '-';
+		count += write(1, "-", 1);
 		n = -n;
 	}
-	if (n == 0)
-		ch[0] = '0';
-	while (n > 0)
-	{
-		ch[--len] = (n % 10) + '0';
-		n /= 10;
-	}
-	return (ch);
+	if (n >= 10)
+		count += ft_putnbr(n / 10);
+	ch = (n % 10) + '0';
+	count += write(1, &ch, 1);
+	return (count);
 }

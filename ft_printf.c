@@ -1,20 +1,20 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   ft_printf.c                                        :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: vmakarya <marvin@42.fr>                    +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2025/02/03 22:29:21 by vmakarya          #+#    #+#             */
-// /*   Updated: 2025/02/05 13:19:54 by vmakarya         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: vmakarya <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/02/05 22:18:47 by vmakarya          #+#    #+#             */
+/*   Updated: 2025/02/05 22:22:42 by vmakarya         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int ft_print_string(char *str)
+static int	ft_print_string(char *str)
 {
-	int count;
+	int	count;
 
 	if (!str)
 		return (write(1, "(null)", 6));
@@ -22,8 +22,11 @@ int ft_print_string(char *str)
 	return (count);
 }
 
-int ft_handle_specifier(char spec, va_list* args, int count, char c)
+static int	ft_handle_specifier(char spec, va_list *args, int count)
 {
+	char	c;
+
+	c = 0;
 	if (spec == 's')
 		count = ft_print_string(va_arg(*args, char *));
 	else if (spec == 'd' || spec == 'i')
@@ -48,17 +51,15 @@ int ft_handle_specifier(char spec, va_list* args, int count, char c)
 	return (count);
 }
 
-int ft_printf(const char *ptr, ...)
+int	ft_printf(const char *ptr, ...)
 {
-	va_list args;
-	int count;
-	char ch;
-	int num;
-	
+	va_list	args;
+	int		count;
+	int		num;
+
 	num = 0;
-	ch = 0;
-	va_start(args, ptr);
 	count = 0;
+	va_start(args, ptr);
 	while (*ptr)
 	{
 		if (*ptr == '%')
@@ -68,7 +69,7 @@ int ft_printf(const char *ptr, ...)
 			{
 				ptr++;
 			}
-			count += ft_handle_specifier(*ptr, &args, num, ch);
+			count += ft_handle_specifier(*ptr, &args, num);
 		}
 		else
 			count += write(1, ptr, 1);
